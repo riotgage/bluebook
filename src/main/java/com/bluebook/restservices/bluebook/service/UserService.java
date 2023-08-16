@@ -1,6 +1,7 @@
 package com.bluebook.restservices.bluebook.service;
 
 import com.bluebook.restservices.bluebook.entities.User;
+import com.bluebook.restservices.bluebook.exceptions.UserExistsException;
 import com.bluebook.restservices.bluebook.exceptions.UserNotFoundException;
 import com.bluebook.restservices.bluebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,13 @@ public class UserService {
 	}
 	
 	// Create a user
-	public User createUser(User user){
+	public User createUser(User user) throws UserExistsException {
+		// check if user exists if yes throw exception
 		
+		if(userRepository.findByUserName(user.getUserName())!=null)
+		{
+			throw new UserExistsException("User already exists with username "+ user.getUserName()+" in repository");
+		}
 		return userRepository.save(user);
 	}
 	
