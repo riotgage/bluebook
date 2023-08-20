@@ -2,6 +2,7 @@ package com.bluebook.restservices.bluebook.service;
 
 import com.bluebook.restservices.bluebook.entities.User;
 import com.bluebook.restservices.bluebook.exceptions.UserExistsException;
+import com.bluebook.restservices.bluebook.exceptions.UserNameNotFoundException;
 import com.bluebook.restservices.bluebook.exceptions.UserNotFoundException;
 import com.bluebook.restservices.bluebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,9 @@ public class UserService {
 	}
 	
 	public User findUserByUsername(String username){
-		return userRepository.findByUserName(username);
+		
+		User user = userRepository.findByUserName(username);
+		
+		return user;
 	}
 }

@@ -2,6 +2,7 @@ package com.bluebook.restservices.bluebook.controllers;
 
 import com.bluebook.restservices.bluebook.entities.User;
 import com.bluebook.restservices.bluebook.exceptions.UserExistsException;
+import com.bluebook.restservices.bluebook.exceptions.UserNameNotFoundException;
 import com.bluebook.restservices.bluebook.exceptions.UserNotFoundException;
 import com.bluebook.restservices.bluebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +37,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder builder){
+	public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder){
 		try {
 			userService.createUser(user);
 			
@@ -50,13 +53,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/{id}")
-	public Optional<User> getUserById(@PathVariable("id") Long id){
-		try {
+	public Optional<User> getUserById(@Valid @Min(1) @PathVariable("id")Long id) throws UserNotFoundException {
+		
 			return  userService.getUserById(id);
-		}
-		catch (UserNotFoundException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
-		}
+		
 	}
 	
 	@PutMapping("/users/{id}")
@@ -74,9 +74,17 @@ public class UserController {
 		 userService.deleteUserById(id);
 	}
 	
+	// YOu have just thrown the exception here. So if this exception is not caught anywhere it will go as is
+	// as response.
+	// you can catch it here and send the Response Entity
+	// or you can catch it in global exception handler.
 	@GetMapping("/users/byusername/{username}")
-	public User getUserByUsername(@PathVariable("username") String username){
+	public User getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
 		
-		return userService.findUserByUsername(username);
+		User user= userService.findUserByUsername(username);
+		if(user==null){
+			throw new UserNameNotFoundException(username+" user not found.");
+		}
+		return user;
 	}
 }
