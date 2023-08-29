@@ -60,4 +60,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 				,request.getDescription(false));
 		return new ResponseEntity<Object>(customErrorDetails,HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(OrderNotFoundException.class)
+	public final ResponseEntity<Object> handleOrderNotFoundException(OrderNotFoundException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		CustomErrorDetails customErrorDetails=new CustomErrorDetails(new Date(),ex.getMessage()
+				,request.getDescription(false));
+		return new ResponseEntity<Object>(customErrorDetails,HttpStatus.BAD_REQUEST);
+	}
 }

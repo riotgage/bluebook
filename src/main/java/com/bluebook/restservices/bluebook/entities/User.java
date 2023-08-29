@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +36,11 @@ public class User {
 	
 	@Column(name = "SSN",nullable = false, unique = true, length = 50)
 	private String ssn;
+	
+	// One user can have multiple orders
+	// user is referencing side
+	@OneToMany(mappedBy = "user")
+	private List<Order> order;
 	
 	public User() {
 	}
@@ -102,5 +109,13 @@ public class User {
 	
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
+	}
+	
+	public List<Order> getOrder() {
+		return order;
+	}
+	
+	public void setOrder(List<Order> order) {
+		this.order = order;
 	}
 }

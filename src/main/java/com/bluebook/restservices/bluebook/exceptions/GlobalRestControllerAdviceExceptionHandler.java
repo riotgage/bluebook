@@ -9,7 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalRestControllerAdviceExceptionHandler {
 	
 	@ExceptionHandler(UserNameNotFoundException.class)
