@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.hateoas.RepresentationModel;
+
 @Entity
 @Table(name="orders")
-public class Order {
+public class Order extends RepresentationModel {
 	
 	@Id
 	@GeneratedValue

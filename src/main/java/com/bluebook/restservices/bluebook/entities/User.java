@@ -1,5 +1,7 @@
 package com.bluebook.restservices.bluebook.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends RepresentationModel {
 
 	@Id
 	@GeneratedValue
