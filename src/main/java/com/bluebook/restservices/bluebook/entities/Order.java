@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.hateoas.RepresentationModel;
 
 @Entity
@@ -17,7 +18,10 @@ public class Order extends RepresentationModel {
 	
 	@Id
 	@GeneratedValue
+	@JsonView(Views.Internal.class)
 	private Long orderid;
+	
+	@JsonView(Views.Internal.class)
 	
 	private String orderDescription;
 	
@@ -26,6 +30,7 @@ public class Order extends RepresentationModel {
 	// order is owner side
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
+	@JsonView(Views.Internal.class)
 	private User user;
 	
 	public Order() {

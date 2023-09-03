@@ -3,6 +3,7 @@ package com.bluebook.restservices.bluebook.entities;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -17,37 +18,45 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@JsonFilter(value = "userFilter")
+//@JsonFilter(value = "userFilter") Used for jackson mapping filtering
 //@JsonIgnoreProperties({"firstName","lastName"}) Static filtering
 public class User extends RepresentationModel {
 
 	@Id
 	@GeneratedValue
+	@JsonView(Views.External.class)
 	private Long id;
 	@Size(min=2,message = "First name must have atleast 2 characters")
 	@Column(name = "FIRST_NAME",nullable = false,  length = 50)
+	@JsonView(Views.External.class)
 	private String firstName;
 	
 	@Column(name = "LAST_NAME",nullable = false, length = 50)
+	@JsonView(Views.External.class)
 	private String lastName;
 	
 	@NotEmpty(message = " Username can not be empty. Please provide a valid username")
 	@Column(name = "USER_NAME",nullable = false, unique = true, length = 50)
+	@JsonView(Views.External.class)
 	private String userName;
 	
 	@Column(name = "EMAIL",nullable = false,length = 50)
+	@JsonView(Views.External.class)
 	private String email;
 	
 	@Column(name = "ROLE",nullable = false,length = 50)
+	@JsonView(Views.Internal.class)
 	private String role;
 	
 	@Column(name = "SSN",nullable = false, unique = true, length = 50)
 //	@JsonIgnore              For Static filtering
+	@JsonView(Views.Internal.class)
 	private String ssn;
 	
 	// One user can have multiple orders
 	// user is referencing side
 	@OneToMany(mappedBy = "user")
+	@JsonView(Views.Internal.class)
 	private List<Order> order;
 	
 	public User() {
