@@ -1,5 +1,7 @@
 package com.bluebook.restservices.bluebook.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"firstName","lastName"})
 public class User extends RepresentationModel {
 
 	@Id
@@ -37,6 +40,7 @@ public class User extends RepresentationModel {
 	private String role;
 	
 	@Column(name = "SSN",nullable = false, unique = true, length = 50)
+	@JsonIgnore
 	private String ssn;
 	
 	// One user can have multiple orders
