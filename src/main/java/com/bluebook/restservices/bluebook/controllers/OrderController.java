@@ -6,6 +6,7 @@ import com.bluebook.restservices.bluebook.exceptions.OrderNotFoundException;
 import com.bluebook.restservices.bluebook.exceptions.UserNotFoundException;
 import com.bluebook.restservices.bluebook.repository.OrderRepository;
 import com.bluebook.restservices.bluebook.repository.UserRepository;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class OrderController {
 	private OrderRepository orderRepository;
 	
 	// get All orders for a user
+	@ApiOperation(value = "To access orders of a particular user")
 	@GetMapping("/{userid}/orders")
 	public List<Order> getAllOrders(@PathVariable Long userid) throws UserNotFoundException {
 		

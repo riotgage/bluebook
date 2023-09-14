@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@ApiModel(description = "This model describes the user")
 //@JsonFilter(value = "userFilter") Used for jackson mapping filtering
 //@JsonIgnoreProperties({"firstName","lastName"}) Static filtering
 public class User extends RepresentationModel {
@@ -25,12 +28,14 @@ public class User extends RepresentationModel {
 	@Id
 	@GeneratedValue
 	@JsonView(Views.External.class)
+	@ApiModelProperty(notes = "This is auto generated id",required = true)
 	private Long id;
 	@Size(min=2,message = "First name must have atleast 2 characters")
 	@Column(name = "FIRST_NAME",nullable = false,  length = 50)
 	@JsonView(Views.External.class)
 	private String firstName;
 	
+	@Size(min=2,max=50,message = "First name must have atleast 2 characters")
 	@Column(name = "LAST_NAME",nullable = false, length = 50)
 	@JsonView(Views.External.class)
 	private String lastName;
