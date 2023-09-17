@@ -2,6 +2,7 @@ package com.bluebook.restservices.bluebook;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -11,7 +12,7 @@ import java.util.Locale;
 
 // This is a test project for spring boot
 @SpringBootApplication
-public class BluebookApplication {
+public class BluebookApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BluebookApplication.class, args);
